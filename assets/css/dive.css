@@ -1,0 +1,493 @@
+/* ============================================================================
+   ЗОНА ПОЛУНОЧИ — погружение
+   ----------------------------------------------------------------------------
+   Главный экспонат сайта. Сцена (фон, частицы, существа, фонарь) прилипает
+   через position: sticky, а текстовые сцены наезжают на неё сверху за счёт
+   отрицательного margin. Так фиксированный слой сам исчезает в конце
+   погружения — без переключений в скрипте и без position: fixed на всю страницу.
+
+   В анимациях используются только transform и opacity.
+   ============================================================================ */
+
+.dive { position: relative; }
+
+.dive__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  margin-bottom: -100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  contain: layout paint;
+}
+
+/* Фон: цвет ставится скриптом одной строкой на каждый кадр */
+.dive__bg {
+  position: absolute;
+  inset: 0;
+  background: var(--c-surface);
+}
+
+/* Столб света у поверхности. Гаснет вместе с глубиной (opacity из JS) */
+.dive__beam {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 120%;
+  background:
+    radial-gradient(60% 45% at 50% 0%, rgba(255, 255, 255, 0.55), transparent 70%),
+    repeating-linear-gradient(96deg, rgba(255, 255, 255, 0.10) 0 2px, transparent 2px 26px);
+  mix-blend-mode: screen;
+  transform-origin: 50% 0;
+}
+
+.dive__particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.dive__creatures { position: absolute; inset: 0; }
+
+.creature {
+  position: absolute;
+  opacity: 0;
+  color: var(--c-glow);
+  transform: translate3d(0, 0, 0);
+  animation: drift var(--dur, 26s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+.creature img { width: 100%; height: auto; display: block; user-select: none; }
+.creature--glow img {
+  filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 18px currentColor);
+  animation: pulse var(--pulse, 4.5s) ease-in-out var(--delay, 0s) infinite;
+}
+/* Разворот — на рисунке, а не на обёртке: у обёртки transform занят
+   анимацией дрейфа и перезаписал бы scaleX(-1), существо так и не развернулось бы */
+.creature--flip img { transform: scaleX(-1); }
+
+@keyframes drift {
+  from { transform: translate3d(-4vw, 1.5vh, 0); }
+  to   { transform: translate3d(5vw, -2vh, 0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+/* Курсор-фонарь: затемняет фон и существ, но не текст — текст лежит выше
+   и остаётся читаемым. Радиус и позиция приходят из JS. */
+.dive__dark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(circle var(--flash-r, 260px) at var(--fx, 50%) var(--fy, 50%),
+              transparent 0%, rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.94) 100%);
+  transition: opacity var(--d-slow) var(--e-out);
+}
+
+.dive__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* ------------------------------------------------------------- Сцены ----- */
+.dive__scenes { position: relative; z-index: 2; }
+
+.scene {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  padding-block: var(--s-9);
+}
+.scene--surface { align-content: center; }
+.scene--midnight { min-height: 130vh; }
+.scene--hadal { min-height: 110vh; }
+
+.scene__inner { width: 100%; max-width: var(--w-page); margin-inline: auto; padding-inline: var(--s-4); }
+@media (min-width: 700px) { .scene__inner { padding-inline: var(--s-6); } }
+@media (min-width: 900px) { .scene__inner { padding-left: calc(var(--s-6) + 78px); } }
+
+.scene__label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-glow);
+  margin-bottom: var(--s-4);
+}
+.scene__label::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+.scene__text { max-width: 46ch; }
+.scene__h { margin-bottom: var(--s-4); text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6); }
+.scene--surface .scene__h { font-size: var(--t-hero); }
+.scene__p { color: var(--c-ink); text-shadow: 0 1px 18px rgba(0, 0, 0, 0.75); }
+
+/* Первый экран: даты и место приборной строкой */
+.scene__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  font-family: var(--f-mono);
+  font-size: var(--t-small);
+  color: var(--c-ink);
+  margin-bottom: var(--s-6);
+}
+.scene--surface .scene__label, .scene--surface .scene__meta { color: #0A2530; }
+.scene--surface .scene__h, .scene--surface .scene__p { color: #041018; text-shadow: 0 1px 24px rgba(255, 255, 255, 0.5); }
+.scene--surface .btn { --btn-ink: #041018; --btn-line: rgba(4, 16, 24, 0.4); }
+.scene--surface .btn:hover { --btn-line: #041018; }
+.scene--surface .btn--primary { --btn-ink: #180800; }
+
+.scene__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-6); }
+
+/* Подсказка «прокрутите вниз» — исчезает после первого скролла */
+.scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: var(--s-6);
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: var(--s-2);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #0A2530;
+  transition: opacity var(--d-slow) var(--e-out);
+}
+.scroll-hint.is-gone { opacity: 0; }
+.scroll-hint__line {
+  width: 1px;
+  height: 34px;
+  background: currentColor;
+  transform-origin: 50% 0;
+  animation: hintline 2.4s var(--e-io) infinite;
+}
+@keyframes hintline {
+  0%   { transform: scaleY(0); opacity: 0; }
+  35%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1) translateY(34px); opacity: 0; }
+}
+
+/* Кинетическая типографика: название собирается из букв */
+.dive__title {
+  font-family: var(--f-display);
+  font-size: clamp(2.2rem, 9vw, 7rem);
+  line-height: 0.98;
+  margin-bottom: var(--s-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.28em;
+}
+.dive__title .word { display: inline-flex; }
+.dive__title .ch {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.35em);
+  letter-spacing: 0.4em;
+  color: var(--c-glow);
+  text-shadow: 0 0 26px rgba(95, 242, 228, 0.45);
+  transition: opacity 620ms var(--e-out), transform 620ms var(--e-out), letter-spacing 900ms var(--e-out);
+  transition-delay: calc(var(--i) * 42ms);
+}
+.dive__title.is-on .ch { opacity: 1; transform: none; letter-spacing: 0.02em; }
+
+.scene__quote {
+  border-left: 1px solid var(--c-line-2);
+  padding-left: var(--s-5);
+  margin-top: var(--s-7);
+  max-width: 44ch;
+}
+.scene__quote p { font-size: var(--t-lead); font-style: italic; }
+.scene__quote footer { font-family: var(--f-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-dim); }
+
+/* Три главных экспоната на 6000 м */
+.highlights { display: grid; gap: var(--s-4); margin-top: var(--s-6); }
+@media (min-width: 800px) { .highlights { grid-template-columns: repeat(3, 1fr); } }
+.highlight {
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+.highlight__num { font-family: var(--f-mono); font-size: var(--t-micro); color: var(--c-glow); letter-spacing: 0.14em; }
+.highlight h3 { margin: var(--s-2) 0; font-size: var(--t-h3); }
+.highlight p { font-size: var(--t-small); color: var(--c-ink-dim); }
+
+/* ------------------------------------------------ Шкала глубины слева ---- */
+.scale {
+  position: fixed;
+  left: var(--s-4);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  width: 62px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--d-mid) var(--e-out);
+}
+.scale.is-on { opacity: 1; }
+@media (max-width: 899px) {
+  .scale { left: 8px; width: 44px; }
+}
+
+.scale__rail {
+  position: relative;
+  height: 46vh;
+  min-height: 220px;
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  gap: var(--s-2);
+}
+
+/* Трос: рисуется по мере спуска через stroke-dashoffset */
+.scale__rope { width: 22px; height: 100%; overflow: visible; }
+.scale__rope-track { stroke: var(--c-line); stroke-width: 1; fill: none; }
+.scale__rope-line {
+  stroke: var(--c-glow);
+  stroke-width: 1.5;
+  fill: none;
+  filter: drop-shadow(0 0 4px rgba(95, 242, 228, 0.6));
+}
+
+.scale__ticks {
+  position: relative;
+  border-left: 1px solid var(--c-line);
+  height: 100%;
+}
+.scale__tick {
+  position: absolute;
+  left: 0;
+  width: 9px;
+  height: 1px;
+  background: var(--c-line-2);
+}
+.scale__tick--major { width: 15px; background: var(--c-ink-dim); }
+.scale__tick-label {
+  position: absolute;
+  left: 18px;
+  top: -0.55em;
+  font-family: var(--f-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  color: var(--c-ink-dim);
+  white-space: nowrap;
+}
+@media (max-width: 899px) { .scale__tick-label { display: none; } }
+
+/* Бегунок и текущая глубина */
+.scale__marker {
+  position: absolute;
+  left: -4px;
+  top: 0;
+  width: 22px;
+  height: 2px;
+  background: var(--c-glow);
+  box-shadow: var(--glow-hard);
+  will-change: transform;
+}
+.scale__readout {
+  margin-top: var(--s-3);
+  font-family: var(--f-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--c-glow);
+  line-height: 1.1;
+}
+.scale__depth { font-size: clamp(0.78rem, 1.6vw, 1rem); letter-spacing: 0.02em; }
+.scale__zone {
+  display: block;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  margin-top: 2px;
+  max-width: 62px;
+}
+@media (max-width: 899px) { .scale__zone { display: none; } }
+
+/* --------------------------------------------------------- Всплытие ------ */
+.surfaced {
+  position: relative;
+  z-index: 2;
+  background: var(--c-day-bg);
+  color: var(--c-day-ink);
+}
+.surfaced__top {
+  padding-block: var(--s-8) var(--s-6);
+  border-bottom: 1px solid var(--c-day-line);
+}
+.surfaced__label {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c-day-dim);
+  display: block;
+  margin-bottom: var(--s-3);
+}
+
+/* ------------------------------------------------------- Прелоадер ------- */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--c-hadal);
+  display: grid;
+  place-items: center;
+  gap: var(--s-4);
+  transition: opacity 420ms var(--e-out), visibility 420ms;
+}
+.preloader.is-done { opacity: 0; visibility: hidden; }
+.preloader__inner { display: grid; justify-items: center; gap: var(--s-4); }
+.preloader__rope {
+  width: 1px;
+  height: 22vh;
+  min-height: 90px;
+  background: linear-gradient(180deg, transparent, var(--c-glow));
+  transform: scaleY(0);
+  transform-origin: 50% 0;
+  animation: rope 900ms var(--e-io) forwards;
+}
+@keyframes rope { to { transform: scaleY(1); } }
+.preloader__num {
+  font-family: var(--f-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.22em;
+  color: var(--c-glow);
+  font-variant-numeric: tabular-nums;
+}
+.preloader__label {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+}
+.preloader__skip {
+  position: absolute;
+  bottom: var(--s-6);
+  background: none;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm);
+  color: var(--c-ink-dim);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: var(--s-2) var(--s-4);
+  cursor: pointer;
+}
+.preloader__skip:hover { color: var(--c-ink); border-color: var(--c-line-2); }
+
+/* ------------------------------------------ Переход между страницами ----- */
+.wave {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  pointer-events: none;
+  visibility: hidden;
+}
+.wave.is-active { visibility: visible; }
+.wave__body {
+  position: absolute;
+  left: -5%;
+  width: 110%;
+  height: 130%;
+  bottom: 0;
+  background: var(--c-hadal);
+  border-radius: 50% 50% 0 0 / 14% 14% 0 0;
+  transform: translateY(100%);
+}
+.wave.is-in .wave__body { animation: waveIn 560ms var(--e-io) forwards; }
+.wave.is-out .wave__body { animation: waveOut 620ms var(--e-io) forwards; }
+@keyframes waveIn  { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes waveOut { from { transform: translateY(0); }    to { transform: translateY(-115%); } }
+
+/* --------------------------------------------------------- Тише, если
+   пользователь просил меньше движения. Погружение остаётся понятным:
+   фон становится статичным градиентом, тексты видны, шкала стоит на месте. */
+@media (prefers-reduced-motion: reduce) {
+  /* Вся движущаяся сцена убирается целиком, вместо неё — статичный градиент
+     на самих сценах ниже. Контент от этого не теряется. */
+  .dive__stage { display: none; }
+  .dive__title .ch { opacity: 1; transform: none; letter-spacing: 0.02em; }
+  .scroll-hint__line { animation: none; }
+  .preloader { display: none; }
+  .wave { display: none; }
+  .scene { min-height: auto; padding-block: var(--s-8); }
+  .dive__scenes {
+    background: linear-gradient(180deg,
+      var(--c-surface) 0%, var(--c-epi) 18%, var(--c-twilight) 38%,
+      var(--c-midnight) 58%, var(--c-abyssal) 78%, var(--c-hadal) 100%);
+  }
+  .scale { position: sticky; top: calc(var(--h-header) + var(--s-3)); transform: none; opacity: 1; }
+}
+
+/* На первых метрах фон светлый, и циановая шкала на нём не читается.
+   Класс ставится из dive.js по текущей глубине: приборы «переключаются
+   на дневной режим», пока мы не ушли ниже двухсот метров. */
+.scale.is-light .scale__depth,
+.scale.is-light .scale__zone,
+.scale.is-light .scale__tick-label { color: #0A2530; }
+.scale.is-light .scale__tick { background: rgba(4, 22, 30, 0.55); }
+.scale.is-light .scale__ticks { border-left-color: rgba(4, 22, 30, 0.35); }
+.scale.is-light .scale__marker { background: #0A2530; box-shadow: none; }
+.scale.is-light .scale__rope-line { stroke: #0A2530; filter: none; }
+.scale.is-light .scale__rope-track { stroke: rgba(4, 22, 30, 0.28); }
+
+/* На телефоне вертикальная линейка налезает на текст и крадёт ширину,
+   которой и так нет. Оставляем только показания приборов — компактной
+   плашкой в нижнем углу: ощущение спуска сохраняется, вёрстка не страдает. */
+@media (max-width: 899px) {
+  .scale {
+    left: var(--s-3);
+    right: auto;
+    top: auto;
+    bottom: var(--s-4);
+    transform: none;
+    width: auto;
+  }
+  .scale__rail { display: none; }
+  .scale__readout {
+    margin-top: 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-2);
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-md);
+    padding: 4px 8px;
+    backdrop-filter: blur(4px);
+  }
+  .scale__zone { display: inline; margin: 0; max-width: none; }
+  .scale.is-light .scale__readout {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(4, 22, 30, 0.25);
+  }
+}
+
+/* ============================================================================
+   Подложка под текст сцен.
+   Фон погружения меняется непрерывно, и на отрезке между поверхностью и
+   сумеречной зоной он проходит через светлые тона: белый текст там падает
+   примерно до 2.3:1. Мягкое затемнение под текстовым блоком держит контраст
+   выше 4.5:1 на любой глубине и при этом не читается как «плашка».
+   Первый экран исключён: там текст тёмный по светлому и подложка не нужна.
+   ============================================================================ */
+.scene:not(.scene--surface) .scene__inner { position: relative; }
+.scene:not(.scene--surface) .scene__inner::before {
+  content: '';
+  position: absolute;
+  inset: -8vh -6vw;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(85% 72% at 38% 50%, rgba(2, 10, 18, 0.66), rgba(2, 10, 18, 0) 78%);
+}

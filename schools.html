@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pl" class="mz-boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#EDF1F2">
+<title>Dla szkół i grup — STREFA PÓŁNOCY</title>
+<meta name="description" content="Trzy programy dla wieku od 8 do 18 lat, od 18 zł za ucznia. Opiekunowie bezpłatnie, karta pracy i materiały dla nauczyciela.">
+
+<link rel="canonical" href="https://oum1d.github.io/midnight-zone/schools.html">
+<link rel="alternate" hreflang="pl" href="https://oum1d.github.io/midnight-zone/schools.html?lang=pl">
+<link rel="alternate" hreflang="ru" href="https://oum1d.github.io/midnight-zone/schools.html?lang=ru">
+<link rel="alternate" hreflang="en" href="https://oum1d.github.io/midnight-zone/schools.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://oum1d.github.io/midnight-zone/schools.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oum1d.github.io/midnight-zone/schools.html">
+<meta property="og:image" content="https://oum1d.github.io/midnight-zone/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Oswald:wght@300;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/dive.css">
+</head>
+
+<!-- Единственная страница без погружения и эффектов. Учителю нужны цифры,
+     а не аттракцион: контраст подачи здесь такая же часть замысла,
+     как темнота на главной. -->
+<body data-page="schools">
+
+<div class="wave" aria-hidden="true"><div class="wave__body"></div></div>
+<a class="skip-link" href="#main" data-i18n="nav.skip"></a>
+
+<!-- Тексты сайта подставляются скриптом из словарей трёх языков. Если
+     JavaScript выключен, страница осталась бы пустой — поэтому здесь лежит
+     минимум, ради которого человек и пришёл: что, где, когда и почём. -->
+<noscript>
+  <div class="noscript">
+    <h2>STREFA PÓŁNOCY / ЗОНА ПОЛУНОЧИ / THE MIDNIGHT ZONE</h2>
+    <p>Wystawa o głębinach oceanu. Muzeum Morskie, ul. Portowa 12, Gdynia.
+       3.10.2026 — 7.02.2027, wtorek–niedziela 10:00–20:00, ostatnie wejście 19:00.
+       Bilety: 45 / 28 / 130 zł. Kontakt: kontakt@strefa-polnocy.example, +48 000 000 000.</p>
+    <p>Strona przełącza języki skryptem — włącz JavaScript, aby zobaczyć pełną wersję.</p>
+  </div>
+</noscript>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>
+      </svg>
+      <span class="brand__name" data-i18n="brand.name"></span>
+    </a>
+    <nav class="nav" id="nav" data-i18n-attr="aria-label:nav.main">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html" data-i18n="nav.dive"></a></li>
+        <li><a class="nav__link" href="halls.html" data-i18n="nav.halls"></a></li>
+        <li><a class="nav__link" href="tickets.html" data-i18n="nav.tickets"></a></li>
+        <li><a class="nav__link" href="schools.html" aria-current="page" data-i18n="nav.schools"></a></li>
+        <li><a class="nav__link" href="visit.html" data-i18n="nav.visit"></a></li>
+      </ul>
+    </nav>
+    <div class="header__side">
+      <div class="lang" role="group" data-i18n-attr="aria-label:nav.lang">
+        <button type="button" class="lang__btn" data-lang-btn="pl" aria-pressed="false">PL</button>
+        <button type="button" class="lang__btn" data-lang-btn="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang__btn" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+      <a class="btn btn--primary btn--sm" href="tickets.html">
+        <span class="btn__long" data-i18n="nav.buy"></span>
+        <span class="btn__short" data-i18n="nav.buyShort"></span>
+      </a>
+    </div>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="nav" data-i18n-attr="aria-label:nav.menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="page page--day is-day">
+
+  <div class="page__hero">
+    <div class="wrap">
+      <span class="label" data-i18n="nav.schools"></span>
+      <h1 data-i18n="schools.h1"></h1>
+      <p class="lead" data-i18n="schools.lead"></p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="mb-4" data-i18n="schools.programsTitle"></h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th data-i18n="schools.programsTitle"></th>
+              <th data-i18n="schools.age"></th>
+              <th data-i18n="schools.duration"></th>
+              <th data-i18n="schools.price"></th>
+            </tr>
+          </thead>
+          <tbody data-programs></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2 class="mb-4" data-i18n="schools.bringTitle"></h2>
+          <ul data-bring></ul>
+        </div>
+        <div>
+          <h2 class="mb-4" data-i18n="schools.filesTitle"></h2>
+          <div class="files" data-files></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="split">
+        <div>
+          <h2 class="mb-4" data-i18n="schools.formTitle"></h2>
+          <p class="lead" data-i18n="schools.formLead"></p>
+        </div>
+
+        <div>
+          <form class="form" data-form="school" novalidate>
+            <div class="hp" aria-hidden="true">
+              <label for="s-website">Website</label>
+              <input type="text" id="s-website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="form__row form__row--2">
+              <div class="field">
+                <label class="field__label" for="s-school"><span data-i18n="forms.school"></span> <span class="req">*</span></label>
+                <input class="input" type="text" id="s-school" name="school" required
+                       data-i18n-attr="placeholder:forms.schoolPh">
+                <p class="field__error"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="s-grade"><span data-i18n="forms.grade"></span> <span class="req">*</span></label>
+                <input class="input" type="text" id="s-grade" name="grade" required
+                       data-i18n-attr="placeholder:forms.gradePh">
+                <p class="field__error"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-program" data-i18n="forms.program"></label>
+              <select class="select" id="s-program" name="program" data-program-select></select>
+              <p class="field__error"></p>
+            </div>
+
+            <div class="form__row form__row--2">
+              <div class="field">
+                <label class="field__label" for="s-kids"><span data-i18n="forms.kids"></span> <span class="req">*</span></label>
+                <input class="input" type="number" id="s-kids" name="kids" required min="10" max="30" value="20">
+                <p class="field__error"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="s-date"><span data-i18n="forms.date"></span> <span class="req">*</span></label>
+                <input class="input" type="date" id="s-date" name="date" required
+                       min="2026-10-03" max="2027-02-07">
+                <p class="field__error"></p>
+              </div>
+            </div>
+
+            <div class="form__row form__row--2">
+              <div class="field">
+                <label class="field__label" for="s-teacher"><span data-i18n="forms.teacher"></span> <span class="req">*</span></label>
+                <input class="input" type="text" id="s-teacher" name="teacher" required autocomplete="name"
+                       data-i18n-attr="placeholder:forms.teacherPh">
+                <p class="field__error"></p>
+              </div>
+              <div class="field">
+                <label class="field__label" for="s-email"><span data-i18n="forms.email"></span> <span class="req">*</span></label>
+                <input class="input" type="email" id="s-email" name="email" required autocomplete="email"
+                       data-i18n-attr="placeholder:forms.emailPh">
+                <p class="field__error"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="s-phone" data-i18n="forms.phone"></label>
+              <input class="input" type="tel" id="s-phone" name="phone" autocomplete="tel"
+                     data-i18n-attr="placeholder:forms.phonePh">
+              <p class="field__error"></p>
+            </div>
+
+            <div class="field">
+              <label class="check">
+                <input type="checkbox" name="consent" required>
+                <span>
+                  <span data-i18n="forms.consent"></span><br>
+                  <a href="privacy.html" data-i18n="forms.consentLink"></a>
+                </span>
+              </label>
+              <p class="field__error"></p>
+            </div>
+
+            <p class="form__alert" data-form-alert hidden></p>
+
+            <button class="btn btn--primary" type="submit" data-i18n="forms.submitSchool"></button>
+            <p class="form__note" data-i18n="forms.demoNote"></p>
+          </form>
+
+          <div class="form__success" data-success hidden>
+            <h3 data-success-title data-i18n="forms.successTitle"></h3>
+            <p data-success-text></p>
+            <button class="btn btn--sm mt-4" type="button" data-success-again data-i18n="forms.successAgain"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer is-day">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand" data-i18n="brand.name"></div>
+        <p class="form__note" data-i18n="brand.sub"></p>
+      </div>
+      <div>
+        <h2 data-i18n="footer.nav"></h2>
+        <ul>
+          <li><a href="index.html" data-i18n="nav.dive"></a></li>
+          <li><a href="halls.html" data-i18n="nav.halls"></a></li>
+          <li><a href="tickets.html" data-i18n="nav.tickets"></a></li>
+          <li><a href="visit.html" data-i18n="nav.visit"></a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-i18n="footer.contacts"></h2>
+        <ul>
+          <li data-i18n="visit.address"></li>
+          <li><a href="mailto:kontakt@strefa-polnocy.example">kontakt@strefa-polnocy.example</a></li>
+          <li><a href="tel:+48000000000">+48 000 000 000</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-i18n="footer.hours"></h2>
+        <ul><li data-i18n="visit.hours"></li></ul>
+        <h2 class="mt-5" data-i18n="footer.legal"></h2>
+        <ul><li><a href="privacy.html" data-i18n="forms.consentLink"></a></li></ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span data-i18n="footer.rights"></span>
+      <span class="footer__demo" data-i18n="footer.demo"></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/data/lang-pl.js"></script>
+<script src="assets/data/lang-ru.js"></script>
+<script src="assets/data/lang-en.js"></script>
+<script src="assets/data/exhibition.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/forms.js"></script>
+<script src="assets/js/schools.js"></script>
+<script src="assets/js/ui.js"></script>
+</body>
+</html>

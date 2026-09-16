@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pl" class="mz-boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#EDF1F2">
+<title>Polityka prywatności — STREFA PÓŁNOCY</title>
+<meta name="description" content="Wzór polityki prywatności wystawy: jakie dane zbieramy z formularzy, po co, jak długo je przechowujemy i jakie masz prawa.">
+<meta name="robots" content="index, nofollow">
+
+<link rel="canonical" href="https://oum1d.github.io/midnight-zone/privacy.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Oswald:wght@300;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/dive.css">
+</head>
+
+<body data-page="privacy">
+
+<div class="wave" aria-hidden="true"><div class="wave__body"></div></div>
+<a class="skip-link" href="#main" data-i18n="nav.skip"></a>
+
+<!-- Тексты сайта подставляются скриптом из словарей трёх языков. Если
+     JavaScript выключен, страница осталась бы пустой — поэтому здесь лежит
+     минимум, ради которого человек и пришёл: что, где, когда и почём. -->
+<noscript>
+  <div class="noscript">
+    <h2>STREFA PÓŁNOCY / ЗОНА ПОЛУНОЧИ / THE MIDNIGHT ZONE</h2>
+    <p>Wystawa o głębinach oceanu. Muzeum Morskie, ul. Portowa 12, Gdynia.
+       3.10.2026 — 7.02.2027, wtorek–niedziela 10:00–20:00, ostatnie wejście 19:00.
+       Bilety: 45 / 28 / 130 zł. Kontakt: kontakt@strefa-polnocy.example, +48 000 000 000.</p>
+    <p>Strona przełącza języki skryptem — włącz JavaScript, aby zobaczyć pełną wersję.</p>
+  </div>
+</noscript>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>
+      </svg>
+      <span class="brand__name" data-i18n="brand.name"></span>
+    </a>
+    <nav class="nav" id="nav" data-i18n-attr="aria-label:nav.main">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html" data-i18n="nav.dive"></a></li>
+        <li><a class="nav__link" href="halls.html" data-i18n="nav.halls"></a></li>
+        <li><a class="nav__link" href="tickets.html" data-i18n="nav.tickets"></a></li>
+        <li><a class="nav__link" href="schools.html" data-i18n="nav.schools"></a></li>
+        <li><a class="nav__link" href="visit.html" data-i18n="nav.visit"></a></li>
+      </ul>
+    </nav>
+    <div class="header__side">
+      <div class="lang" role="group" data-i18n-attr="aria-label:nav.lang">
+        <button type="button" class="lang__btn" data-lang-btn="pl" aria-pressed="false">PL</button>
+        <button type="button" class="lang__btn" data-lang-btn="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang__btn" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+    <button type="button" class="burger" aria-expanded="false" aria-controls="nav" data-i18n-attr="aria-label:nav.menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main" class="page page--day is-day">
+  <div class="page__hero">
+    <div class="wrap">
+      <span class="label" data-i18n="footer.legal"></span>
+      <h1 data-i18n="privacy.h1"></h1>
+      <!-- Прямая пометка, а не мелкий шрифт внизу: это шаблон, а не документ -->
+      <div class="warn mt-5">
+        <p data-i18n="privacy.template"></p>
+      </div>
+      <p class="form__note mt-4" data-i18n="privacy.updated"></p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="stack" data-privacy></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer is-day">
+  <div class="wrap">
+    <div class="footer__bottom">
+      <span data-i18n="footer.rights"></span>
+      <span class="footer__demo" data-i18n="footer.demo"></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/data/lang-pl.js"></script>
+<script src="assets/data/lang-ru.js"></script>
+<script src="assets/data/lang-en.js"></script>
+<script src="assets/data/exhibition.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/visit.js"></script>
+<script src="assets/js/ui.js"></script>
+</body>
+</html>

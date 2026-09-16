@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="pl" class="mz-boot">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#040A12">
+<meta name="robots" content="index, follow">
+
+<!-- Заголовок и описание подставляет i18n.js под выбранный язык.
+     То, что записано здесь, — версия по умолчанию для поисковых роботов
+     и для случая, когда JavaScript отключён. -->
+<title>STREFA PÓŁNOCY — wystawa o głębinach oceanu w Gdyni</title>
+<meta name="description" content="Poniżej 200 metrów nie ma słońca. Wystawa o czterech kilometrach wody, pod którymi wciąż jest życie: 12 sal, makiety batyskafów, świecące modele stworzeń i sala całkowitej ciemności.">
+
+<link rel="canonical" href="https://oum1d.github.io/midnight-zone/">
+<link rel="alternate" hreflang="pl" href="https://oum1d.github.io/midnight-zone/?lang=pl">
+<link rel="alternate" hreflang="ru" href="https://oum1d.github.io/midnight-zone/?lang=ru">
+<link rel="alternate" hreflang="en" href="https://oum1d.github.io/midnight-zone/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://oum1d.github.io/midnight-zone/">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oum1d.github.io/midnight-zone/">
+<meta property="og:image" content="https://oum1d.github.io/midnight-zone/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Oswald:wght@300;500;600&amp;display=swap">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/dive.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ExhibitionEvent",
+  "name": "Strefa Północy",
+  "startDate": "2026-10-03",
+  "endDate": "2027-02-07",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "description": "Wystawa o życiu w głębinach oceanu: 12 sal, makiety batyskafów, świecące modele stworzeń i sala całkowitej ciemności.",
+  "location": {
+    "@type": "Place",
+    "name": "Muzeum Morskie",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "ul. Portowa 12",
+      "addressLocality": "Gdynia",
+      "addressCountry": "PL"
+    }
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "45",
+    "priceCurrency": "PLN",
+    "availability": "https://schema.org/InStock",
+    "url": "https://oum1d.github.io/midnight-zone/tickets.html"
+  }
+}
+</script>
+</head>
+
+<body data-page="home">
+
+<!-- Прелоадер: трос уходит вниз, проценты моноширинными цифрами.
+     Живёт не дольше 600 мс и снимается по таймеру при любой ошибке. -->
+<div class="preloader" role="status" aria-live="polite">
+  <div class="preloader__inner">
+    <span class="preloader__label" data-i18n="preloader.label"></span>
+    <span class="preloader__rope" aria-hidden="true"></span>
+    <span class="preloader__num mono">0%</span>
+  </div>
+  <button type="button" class="preloader__skip" data-i18n="preloader.skip"></button>
+</div>
+
+<div class="wave" aria-hidden="true"><div class="wave__body"></div></div>
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip-link" href="#main" data-i18n="nav.skip"></a>
+
+<!-- Тексты сайта подставляются скриптом из словарей трёх языков. Если
+     JavaScript выключен, страница осталась бы пустой — поэтому здесь лежит
+     минимум, ради которого человек и пришёл: что, где, когда и почём. -->
+<noscript>
+  <div class="noscript">
+    <h2>STREFA PÓŁNOCY / ЗОНА ПОЛУНОЧИ / THE MIDNIGHT ZONE</h2>
+    <p>Wystawa o głębinach oceanu. Muzeum Morskie, ul. Portowa 12, Gdynia.
+       3.10.2026 — 7.02.2027, wtorek–niedziela 10:00–20:00, ostatnie wejście 19:00.
+       Bilety: 45 / 28 / 130 zł. Kontakt: kontakt@strefa-polnocy.example, +48 000 000 000.</p>
+    <p>Strona przełącza języki skryptem — włącz JavaScript, aby zobaczyć pełną wersję.</p>
+  </div>
+</noscript>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>
+      </svg>
+      <span class="brand__name" data-i18n="brand.name"></span>
+    </a>
+
+    <nav class="nav" id="nav" data-i18n-attr="aria-label:nav.main">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="index.html" aria-current="page" data-i18n="nav.dive"></a></li>
+        <li><a class="nav__link" href="halls.html" data-i18n="nav.halls"></a></li>
+        <li><a class="nav__link" href="tickets.html" data-i18n="nav.tickets"></a></li>
+        <li><a class="nav__link" href="schools.html" data-i18n="nav.schools"></a></li>
+        <li><a class="nav__link" href="visit.html" data-i18n="nav.visit"></a></li>
+      </ul>
+    </nav>
+
+    <div class="header__side">
+      <div class="lang" role="group" data-i18n-attr="aria-label:nav.lang">
+        <button type="button" class="lang__btn" data-lang-btn="pl" aria-pressed="false">PL</button>
+        <button type="button" class="lang__btn" data-lang-btn="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang__btn" data-lang-btn="en" aria-pressed="false">EN</button>
+      </div>
+      <!-- Кнопка покупки доступна с любого экрана: пройти погружение целиком
+           ради билета никто не обязан -->
+      <a class="btn btn--primary btn--sm" href="tickets.html">
+        <span class="btn__long" data-i18n="nav.buy"></span>
+        <span class="btn__short" data-i18n="nav.buyShort"></span>
+      </a>
+    </div>
+
+    <button type="button" class="burger" aria-expanded="false" aria-controls="nav" data-i18n-attr="aria-label:nav.menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="dive">
+    <!-- Сцена: фон, свет, взвесь, существа, фонарь. Целиком декоративна. -->
+    <div class="dive__stage" aria-hidden="true">
+      <div class="dive__bg"></div>
+      <div class="dive__beam"></div>
+      <canvas class="dive__particles"></canvas>
+      <div class="dive__creatures"></div>
+      <div class="dive__dark"></div>
+      <div class="dive__vignette"></div>
+    </div>
+
+    <div class="dive__scenes">
+
+      <!-- 0 м · Поверхность -->
+      <section class="scene scene--surface" data-depth="0">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.surface.label"></span>
+          <h1 class="scene__h" data-i18n="dive.surface.h1"></h1>
+          <p class="scene__p lead" data-i18n="dive.surface.sub"></p>
+          <div class="scene__meta">
+            <span data-i18n="dive.surface.dates"></span>
+            <span data-i18n="dive.surface.place"></span>
+          </div>
+          <div class="scene__actions">
+            <a class="btn btn--primary" href="tickets.html" data-i18n="nav.buy"></a>
+            <a class="btn" href="#scene-epi" data-i18n="dive.surface.cta"></a>
+          </div>
+        </div>
+        <div class="scroll-hint" aria-hidden="true">
+          <span class="scroll-hint__line"></span>
+          <span data-i18n="dive.hint"></span>
+        </div>
+      </section>
+
+      <!-- 200 м · Эпипелагиаль -->
+      <section class="scene" id="scene-epi" data-depth="200">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.epi.label"></span>
+          <div class="scene__text">
+            <h2 class="scene__h" data-i18n="dive.epi.h2"></h2>
+            <p class="scene__p" data-i18n="dive.epi.text"></p>
+          </div>
+          <div class="facts mt-6">
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.depth"></div>
+              <div class="fact__value"><span data-count-to="200">200</span><span class="fact__unit" data-i18n="common.metres"></span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.temp"></div>
+              <div class="fact__value">+<span data-count-to="12">12</span><span class="fact__unit">°C</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.pressure"></div>
+              <div class="fact__value"><span data-count-to="21">21</span><span class="fact__unit">atm</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.light"></div>
+              <div class="fact__value" data-i18n="dive.lightOne"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1000 м · Сумеречная зона -->
+      <section class="scene" data-depth="1000">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.twilight.label"></span>
+          <div class="scene__text">
+            <h2 class="scene__h" data-i18n="dive.twilight.h2"></h2>
+            <p class="scene__p" data-i18n="dive.twilight.text"></p>
+          </div>
+          <div class="facts mt-6">
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.depth"></div>
+              <div class="fact__value"><span data-count-to="1000">1 000</span><span class="fact__unit" data-i18n="common.metres"></span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.temp"></div>
+              <div class="fact__value">+<span data-count-to="4">4</span><span class="fact__unit">°C</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.pressure"></div>
+              <div class="fact__value"><span data-count-to="101">101</span><span class="fact__unit">atm</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.light"></div>
+              <div class="fact__value" data-i18n="dive.lightNone"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4000 м · Зона полуночи. Здесь собирается название выставки -->
+      <section class="scene scene--midnight" data-depth="4000">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.midnight.label"></span>
+          <h2 class="dive__title"></h2>
+          <div class="scene__text">
+            <p class="scene__h" data-i18n="dive.midnight.h2"></p>
+            <p class="scene__p" data-i18n="dive.midnight.text"></p>
+          </div>
+          <blockquote class="scene__quote">
+            <p data-i18n="dive.midnight.quote"></p>
+            <footer data-i18n="dive.midnight.quoteAuthor"></footer>
+          </blockquote>
+          <div class="facts mt-7">
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.depth"></div>
+              <div class="fact__value"><span data-count-to="4000">4 000</span><span class="fact__unit" data-i18n="common.metres"></span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.temp"></div>
+              <div class="fact__value">+<span data-count-to="2">2</span><span class="fact__unit">°C</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.pressure"></div>
+              <div class="fact__value"><span data-count-to="401">401</span><span class="fact__unit">atm</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.light"></div>
+              <div class="fact__value" data-i18n="dive.lightNone"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6000 м · Абиссаль -->
+      <section class="scene" data-depth="6000">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.abyssal.label"></span>
+          <div class="scene__text">
+            <h2 class="scene__h" data-i18n="dive.abyssal.h2"></h2>
+            <p class="scene__p" data-i18n="dive.abyssal.text"></p>
+          </div>
+          <h3 class="label mt-7" data-i18n="dive.abyssal.highlights"></h3>
+          <div class="highlights" data-highlights></div>
+        </div>
+      </section>
+
+      <!-- 11 000 м · Хадаль. Дно и единственная кнопка -->
+      <section class="scene scene--hadal" data-depth="11000">
+        <div class="scene__inner">
+          <span class="scene__label" data-i18n="dive.hadal.label"></span>
+          <div class="scene__text">
+            <h2 class="scene__h" data-i18n="dive.hadal.h2"></h2>
+            <p class="scene__p" data-i18n="dive.hadal.text"></p>
+          </div>
+          <div class="facts mt-6">
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.depth"></div>
+              <div class="fact__value"><span data-count-to="11000">11 000</span><span class="fact__unit" data-i18n="common.metres"></span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.temp"></div>
+              <div class="fact__value">+<span data-count-to="1">1</span><span class="fact__unit">°C</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.pressure"></div>
+              <div class="fact__value"><span data-count-to="1100">1 100</span><span class="fact__unit">atm</span></div>
+            </div>
+            <div class="fact">
+              <div class="fact__label" data-i18n="dive.facts.light"></div>
+              <div class="fact__value" data-i18n="dive.lightNone"></div>
+            </div>
+          </div>
+          <div class="scene__actions mt-7">
+            <a class="btn btn--primary" href="tickets.html" data-i18n="dive.hadal.cta"></a>
+            <a class="btn btn--glow" href="schools.html" data-i18n="dive.hadal.ctaSchools"></a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Шкала глубины. Показания приборов, а не содержание: скринридеру они
+       не нужны и только мешали бы постоянными обновлениями. -->
+  <aside class="scale" aria-hidden="true">
+    <div class="scale__rail">
+      <svg class="scale__rope" viewBox="0 0 22 400" preserveAspectRatio="none">
+        <path class="scale__rope-track" d="M11 0 C 4 60, 18 120, 11 200 S 4 320, 11 400" pathLength="1"/>
+        <path class="scale__rope-line" d="M11 0 C 4 60, 18 120, 11 200 S 4 320, 11 400"
+              pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/>
+      </svg>
+      <div class="scale__ticks">
+        <div class="scale__marker"></div>
+      </div>
+    </div>
+    <div class="scale__readout">
+      <span class="scale__depth">−00 000 м</span>
+      <span class="scale__zone"></span>
+    </div>
+  </aside>
+
+  <!-- Всплытие. Свет включается резко — так и задумано -->
+  <section class="surfaced is-day">
+    <div class="surfaced__top">
+      <div class="wrap">
+        <span class="surfaced__label" data-i18n="dive.surfaced.label"></span>
+        <p class="lead" data-i18n="dive.surfaced.note"></p>
+      </div>
+    </div>
+    <div class="wrap section--tight">
+      <div class="grid grid--4">
+        <a class="panel" href="halls.html">
+          <h2 class="h3" data-i18n="nav.halls"></h2>
+          <p class="form__note" data-i18n="halls.lead"></p>
+        </a>
+        <a class="panel" href="tickets.html">
+          <h2 class="h3" data-i18n="nav.tickets"></h2>
+          <p class="form__note" data-i18n="tickets.lead"></p>
+        </a>
+        <a class="panel" href="schools.html">
+          <h2 class="h3" data-i18n="nav.schools"></h2>
+          <p class="form__note" data-i18n="schools.lead"></p>
+        </a>
+        <a class="panel" href="visit.html">
+          <h2 class="h3" data-i18n="nav.visit"></h2>
+          <p class="form__note" data-i18n="visit.hours"></p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer is-day">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand" data-i18n="brand.name"></div>
+        <p class="form__note" data-i18n="brand.sub"></p>
+      </div>
+      <div>
+        <h2 data-i18n="footer.nav"></h2>
+        <ul>
+          <li><a href="halls.html" data-i18n="nav.halls"></a></li>
+          <li><a href="tickets.html" data-i18n="nav.tickets"></a></li>
+          <li><a href="schools.html" data-i18n="nav.schools"></a></li>
+          <li><a href="visit.html" data-i18n="nav.visit"></a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-i18n="footer.contacts"></h2>
+        <ul>
+          <li data-i18n="visit.address"></li>
+          <li><a href="mailto:kontakt@strefa-polnocy.example">kontakt@strefa-polnocy.example</a></li>
+          <li><a href="tel:+48000000000">+48 000 000 000</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 data-i18n="footer.hours"></h2>
+        <ul>
+          <li data-i18n="visit.hours"></li>
+        </ul>
+        <h2 class="mt-5" data-i18n="footer.legal"></h2>
+        <ul>
+          <li><a href="privacy.html" data-i18n="forms.consentLink"></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span data-i18n="footer.rights"></span>
+      <span class="footer__demo" data-i18n="footer.demo"></span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/core.js"></script>
+<script src="assets/data/lang-pl.js"></script>
+<script src="assets/data/lang-ru.js"></script>
+<script src="assets/data/lang-en.js"></script>
+<script src="assets/data/exhibition.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/dive.js"></script>
+<script src="assets/js/ui.js"></script>
+</body>
+</html>

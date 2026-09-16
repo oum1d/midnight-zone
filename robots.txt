@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /midnight-zone/
+Disallow: /midnight-zone/404.html
+
+Sitemap: https://oum1d.github.io/midnight-zone/sitemap.xml

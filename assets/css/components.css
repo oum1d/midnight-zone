@@ -1,0 +1,746 @@
+/* ============================================================================
+   ЗОНА ПОЛУНОЧИ — компоненты
+   ============================================================================ */
+
+/* ---------------------------------------------------------------- Кнопки -- */
+.btn {
+  --btn-bg: transparent;
+  --btn-ink: var(--c-ink);
+  --btn-line: var(--c-line-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: var(--s-3) var(--s-5);
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  border: 1px solid var(--btn-line);
+  border-radius: var(--r-md);
+  font-family: var(--f-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out),
+              border-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out),
+              transform var(--d-fast) var(--e-out);
+}
+.btn:hover { color: var(--btn-ink); border-color: var(--c-ink); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+.btn[disabled]:active { transform: none; }
+
+.btn--primary {
+  --btn-bg: var(--c-alert);
+  --btn-ink: #180800;
+  --btn-line: var(--c-alert);
+  font-weight: 600;
+}
+.btn--primary:hover {
+  --btn-bg: #FF8355;
+  --btn-ink: #180800;
+  box-shadow: var(--glow-alert);
+  border-color: #FF8355;
+}
+
+.btn--glow {
+  --btn-ink: var(--c-glow);
+  --btn-line: color-mix(in srgb, var(--c-glow) 45%, transparent);
+}
+.btn--glow:hover { --btn-ink: var(--c-glow); box-shadow: var(--glow-soft); border-color: var(--c-glow); }
+
+.btn--sm { min-height: 36px; padding: var(--s-2) var(--s-4); font-size: var(--t-small); }
+.btn--wide { width: 100%; }
+
+.is-day .btn { --btn-ink: var(--c-day-ink); --btn-line: var(--c-day-line); }
+.is-day .btn:hover { border-color: var(--c-day-ink); }
+.is-day .btn--primary { --btn-ink: #180800; --btn-line: var(--c-alert); }
+
+/* ------------------------------------------------------- Метки и плашки -- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  border: 1px solid var(--c-line);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.tag--alert { color: var(--c-alert); border-color: color-mix(in srgb, var(--c-alert) 45%, transparent); }
+.tag--glow { color: var(--c-glow); border-color: color-mix(in srgb, var(--c-glow) 40%, transparent); }
+
+/* --------------------------------------------------------------- Панель -- */
+.panel {
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+}
+.panel--pad { padding: var(--s-6); }
+
+/* ------------------------------------------------------- Карточки залов --
+   3D-наклон считается в JS и приходит сюда двумя переменными. Анимируются
+   только transform и opacity; подсветка изнутри — отдельный слой с opacity. */
+.halls-grid { display: grid; gap: var(--s-4); }
+@media (min-width: 640px) { .halls-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .halls-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.hall {
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-panel);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform var(--d-mid) var(--e-out), border-color var(--d-mid) var(--e-out),
+              box-shadow var(--d-mid) var(--e-out);
+  will-change: auto;
+}
+.hall.is-tilting { transition: border-color var(--d-mid) var(--e-out), box-shadow var(--d-mid) var(--e-out); will-change: transform; }
+.hall:hover, .hall:focus-within { border-color: var(--c-line-2); box-shadow: var(--glow-soft); }
+
+/* Подсветка изнутри — идёт за курсором */
+.hall::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(220px circle at var(--mx) var(--my),
+              rgba(95, 242, 228, 0.16), transparent 70%);
+  transition: opacity var(--d-mid) var(--e-out);
+}
+.hall:hover::after, .hall:focus-within::after { opacity: 1; }
+
+.hall--dark { border-color: color-mix(in srgb, var(--c-alert) 35%, transparent); }
+.hall--dark:hover { box-shadow: var(--glow-alert); }
+
+.hall__media { position: relative; }
+.hall__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding: var(--s-4) var(--s-4) 0;
+}
+.hall__num {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  color: var(--c-glow);
+}
+.hall--dark .hall__num { color: var(--c-alert); }
+.hall__title { padding: var(--s-2) var(--s-4) var(--s-3); font-size: var(--t-h3); }
+
+.hall__toggle {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--c-line);
+  margin-top: auto;
+  padding: var(--s-3) var(--s-4);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  cursor: pointer;
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  transition: color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
+}
+.hall__toggle:hover { color: var(--c-ink); background: var(--c-panel-2); }
+.hall__toggle::after {
+  content: '';
+  width: 9px; height: 9px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform var(--d-mid) var(--e-out);
+}
+.hall__toggle[aria-expanded='true']::after { transform: rotate(-135deg) translate(-2px, -2px); }
+
+.hall__panel { overflow: hidden; height: 0; visibility: hidden; transition: height var(--d-mid) var(--e-io); }
+.hall__panel-inner { padding: 0 var(--s-4) var(--s-4); color: var(--c-ink-dim); font-size: var(--t-small); }
+
+/* --------------------------------------------- Заглушка вместо фото ------
+   Не серый прямоугольник: приборная сетка + подпись, что это заглушка.
+   aspect-ratio задан, поэтому вёрстка не прыгает, когда фото появится.     */
+.stub {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(234, 244, 246, 0.05) 0 1px,
+      transparent 1px 9px),
+    linear-gradient(160deg, var(--c-twilight), var(--c-hadal));
+  display: grid;
+  place-items: center;
+  border-bottom: 1px solid var(--c-line);
+}
+.stub__num {
+  font-family: var(--f-display);
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  line-height: 1;
+  color: rgba(234, 244, 246, 0.14);
+  letter-spacing: 0.04em;
+}
+.stub__note {
+  position: absolute;
+  left: var(--s-3);
+  bottom: var(--s-3);
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 6px;
+  border-radius: var(--r-sm);
+}
+.stub--wide { aspect-ratio: 16 / 9; }
+
+/* -------------------------------------------------- Предупреждение зала -- */
+.warn {
+  border: 1px solid color-mix(in srgb, var(--c-alert) 45%, transparent);
+  border-left-width: 3px;
+  border-radius: var(--r-md);
+  background: color-mix(in srgb, var(--c-alert) 7%, transparent);
+  padding: var(--s-5);
+}
+.warn__head { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-3); }
+.warn__icon { width: 26px; height: 26px; flex-shrink: 0; color: var(--c-alert); }
+.warn h2, .warn h3 { color: var(--c-alert); font-size: var(--t-h3); }
+.warn ul { margin-top: var(--s-3); margin-bottom: 0; }
+.warn li { color: var(--c-ink-dim); font-size: var(--t-small); }
+
+/* ------------------------------------------------------------ Аккордеон -- */
+.acc { border-top: 1px solid var(--c-line); }
+.acc__item { border-bottom: 1px solid var(--c-line); }
+.acc__btn {
+  appearance: none;
+  background: none;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  cursor: pointer;
+  font-family: var(--f-display);
+  font-size: var(--t-h3);
+  line-height: 1.2;
+  color: var(--c-ink);
+  transition: color var(--d-fast) var(--e-out);
+}
+.acc__btn:hover { color: var(--c-glow); }
+.acc__btn::after {
+  content: '';
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 12px; height: 12px;
+  margin-top: 6px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--d-mid) var(--e-out);
+}
+.acc__btn[aria-expanded='true']::after { transform: rotate(-135deg); }
+.acc__panel { overflow: hidden; height: 0; visibility: hidden; transition: height var(--d-mid) var(--e-io); }
+.acc__panel-inner { padding: 0 0 var(--s-5); color: var(--c-ink-dim); max-width: var(--w-text); }
+
+/* --------------------------------------------------- Карточки-факты ------ */
+.facts {
+  display: grid;
+  gap: var(--s-3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  font-family: var(--f-mono);
+}
+@media (min-width: 700px) { .facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fact {
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  background: rgba(2, 10, 18, 0.55);
+}
+.fact__label {
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  margin-bottom: var(--s-1);
+}
+.fact__value { font-size: clamp(1.1rem, 2.4vw, 1.5rem); color: var(--c-ink); font-variant-numeric: tabular-nums; }
+.fact__unit { font-size: 0.7em; color: var(--c-ink-dim); margin-left: 2px; }
+
+/* ------------------------------------------------- Хронология (гориз.) --- */
+.timeline { position: relative; }
+.timeline__viewport { overflow: hidden; }
+.timeline__track {
+  display: flex;
+  gap: var(--s-5);
+  will-change: auto;
+}
+.timeline__card {
+  flex: 0 0 min(78vw, 340px);
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  background: var(--c-panel);
+  position: relative;
+}
+.timeline__year {
+  font-family: var(--f-display);
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  line-height: 1;
+  color: var(--c-glow);
+  margin-bottom: var(--s-3);
+}
+.timeline__name { font-size: var(--t-h3); margin-bottom: var(--s-2); }
+.timeline__meta {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  color: var(--c-ink-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: var(--s-3);
+}
+.timeline__note { font-size: var(--t-small); color: var(--c-ink-dim); }
+.timeline__rail {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 1px;
+  background: var(--c-line);
+}
+
+/* Закреплённая версия включается классом из JS — только на широких экранах
+   и только если движение разрешено. Иначе секция скроллится пальцем вбок. */
+.timeline--pinned .timeline__sticky {
+  position: sticky;
+  top: var(--h-header);
+  height: calc(100vh - var(--h-header));
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.timeline:not(.timeline--pinned) .timeline__viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--s-4);
+  -webkit-overflow-scrolling: touch;
+}
+.timeline:not(.timeline--pinned) .timeline__card { scroll-snap-align: start; }
+
+/* --------------------------------------------------------- Тарифы -------- */
+.tariffs { display: grid; gap: var(--s-4); }
+@media (min-width: 760px) { .tariffs { grid-template-columns: repeat(3, 1fr); } }
+.tariff {
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-lg);
+  padding: var(--s-5);
+  background: var(--c-panel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.tariff__name { font-size: var(--t-h3); }
+.tariff__price {
+  font-family: var(--f-mono);
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  line-height: 1;
+  color: var(--c-glow);
+  font-variant-numeric: tabular-nums;
+}
+.tariff__cur { font-size: 0.42em; color: var(--c-ink-dim); margin-left: 4px; letter-spacing: 0.06em; }
+.tariff__note { font-size: var(--t-small); color: var(--c-ink-dim); }
+
+/* Переключатель будни/выходные */
+.switch {
+  display: inline-flex;
+  border: 1px solid var(--c-line-2);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch label {
+  padding: var(--s-2) var(--s-4);
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  transition: background var(--d-fast) var(--e-out), color var(--d-fast) var(--e-out);
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+}
+.switch input:checked + label { background: var(--c-glow); color: var(--c-hadal); }
+.switch input:focus-visible + label { outline: 2px solid var(--c-glow); outline-offset: 3px; }
+
+/* -------------------------------------------------------- Календарь ------ */
+.cal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+}
+.cal__month { font-family: var(--f-display); font-size: var(--t-h3); letter-spacing: 0.04em; }
+.cal__nav {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-sm);
+  width: 40px; height: 40px;
+  cursor: pointer;
+  color: var(--c-ink);
+  display: grid;
+  place-items: center;
+}
+.cal__nav:hover { border-color: var(--c-ink); }
+.cal__nav[disabled] { opacity: 0.35; cursor: not-allowed; }
+
+.cal__weekdays, .cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.cal__weekdays {
+  margin-bottom: 4px;
+  font-family: var(--f-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink-dim);
+  text-align: center;
+}
+.cal__day {
+  appearance: none;
+  position: relative;
+  aspect-ratio: 1;
+  min-height: 42px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--c-ink);
+  font-family: var(--f-mono);
+  font-size: var(--t-small);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  transition: border-color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
+}
+.cal__day:hover:not([disabled]) { border-color: var(--c-ink); }
+.cal__day[disabled] { opacity: 0.3; cursor: not-allowed; }
+.cal__day.is-empty { border: 0; cursor: default; }
+.cal__day[aria-pressed='true'] {
+  border-color: var(--c-glow);
+  background: color-mix(in srgb, var(--c-glow) 14%, transparent);
+}
+
+/* Загруженность различима не только цветом: у каждого состояния своя
+   форма индикатора, а в подписи — текст для скринридера. */
+.cal__dot { width: 10px; height: 10px; border-radius: 50%; }
+.cal__day--free .cal__dot { border: 1px solid var(--c-glow); background: transparent; }
+.cal__day--few  .cal__dot { border: 1px solid var(--c-alert); background: linear-gradient(90deg, var(--c-alert) 50%, transparent 50%); }
+.cal__day--none .cal__dot { border: 1px solid var(--c-ink-dim); background: var(--c-ink-dim); }
+.cal__day--none { text-decoration: line-through; text-decoration-color: var(--c-ink-dim); }
+
+.cal__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-top: var(--s-4);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  color: var(--c-ink-dim);
+}
+.cal__legend span { display: inline-flex; align-items: center; gap: var(--s-2); }
+
+/* ---------------------------------------------------------- Сеансы ------- */
+.sessions { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+.session {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-sm);
+  padding: var(--s-2) var(--s-4);
+  min-height: 42px;
+  font-family: var(--f-mono);
+  color: var(--c-ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  transition: border-color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
+}
+.session:hover:not([disabled]) { border-color: var(--c-ink); }
+.session[aria-pressed='true'] { border-color: var(--c-glow); background: color-mix(in srgb, var(--c-glow) 14%, transparent); }
+.session[disabled] { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+.session__seats { font-size: var(--t-micro); color: var(--c-ink-dim); }
+
+/* -------------------------------------------------------- Счётчики ------- */
+.stepper { display: flex; align-items: center; gap: var(--s-2); }
+.stepper__btn {
+  appearance: none;
+  width: 40px; height: 40px;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-sm);
+  background: none;
+  color: var(--c-ink);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.stepper__btn:hover:not([disabled]) { border-color: var(--c-ink); }
+.stepper__btn[disabled] { opacity: 0.3; cursor: not-allowed; }
+.stepper__value {
+  width: 3ch;
+  text-align: center;
+  font-family: var(--f-mono);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc__row {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-3);
+  border-bottom: 1px solid var(--c-line);
+}
+.calc__row:last-of-type { border-bottom: 0; }
+.calc__info { flex: 1 1 auto; min-width: 0; }
+.calc__name { font-size: var(--t-body); }
+.calc__price { font-family: var(--f-mono); font-size: var(--t-micro); color: var(--c-ink-dim); }
+.calc__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  border-top: 1px solid var(--c-line-2);
+  margin-top: var(--s-3);
+  padding-top: var(--s-4);
+}
+.calc__total-label { font-family: var(--f-mono); font-size: var(--t-micro); letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-ink-dim); }
+.calc__total-value {
+  font-family: var(--f-mono);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  color: var(--c-glow);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----------------------------------------------------------- Формы ------- */
+.form { display: grid; gap: var(--s-4); }
+.form__row { display: grid; gap: var(--s-4); }
+@media (min-width: 620px) { .form__row--2 { grid-template-columns: 1fr 1fr; } }
+
+.field { display: grid; gap: var(--s-2); }
+.field__label { font-family: var(--f-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-dim); }
+.field__label .req { color: var(--c-alert); }
+
+.input, .select, .textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: var(--s-3);
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-md);
+  color: var(--c-ink);
+  transition: border-color var(--d-fast) var(--e-out), box-shadow var(--d-fast) var(--e-out);
+}
+.textarea { min-height: 120px; resize: vertical; }
+.input::placeholder, .textarea::placeholder { color: color-mix(in srgb, var(--c-ink-dim) 70%, transparent); }
+.input:focus, .select:focus, .textarea:focus { border-color: var(--c-glow); box-shadow: var(--glow-soft); }
+.input[aria-invalid='true'], .textarea[aria-invalid='true'], .select[aria-invalid='true'] { border-color: var(--c-alert); }
+
+.is-day .input, .is-day .select, .is-day .textarea { background: #fff; border-color: var(--c-day-line); }
+
+.field__error {
+  font-size: var(--t-small);
+  color: var(--c-alert);
+  min-height: 0;
+}
+.field__error:empty { display: none; }
+
+.check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--s-3);
+  align-items: start;
+  font-size: var(--t-small);
+  color: var(--c-ink-dim);
+  cursor: pointer;
+}
+.check input {
+  width: 20px; height: 20px;
+  margin: 2px 0 0;
+  accent-color: var(--c-glow);
+  cursor: pointer;
+}
+.is-day .check input { accent-color: var(--c-day-link); }
+
+/* Honeypot: скрыт от людей, но остаётся в DOM для ботов */
+.hp {
+  position: absolute !important;
+  left: -9999px;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form__note { font-family: var(--f-mono); font-size: var(--t-micro); color: var(--c-ink-dim); letter-spacing: 0.04em; }
+
+.form__alert {
+  border: 1px solid var(--c-alert);
+  border-left-width: 3px;
+  border-radius: var(--r-md);
+  padding: var(--s-3) var(--s-4);
+  color: var(--c-alert);
+  font-size: var(--t-small);
+}
+
+.form__success {
+  border: 1px solid color-mix(in srgb, var(--c-glow) 45%, transparent);
+  border-radius: var(--r-lg);
+  padding: var(--s-6);
+  text-align: left;
+}
+.form__success h3 { color: var(--c-glow); margin-bottom: var(--s-3); }
+
+/* ------------------------------------------------------------ Списки ----- */
+.list-plain { list-style: none; padding: 0; margin: 0; }
+.list-plain li { display: flex; gap: var(--s-3); padding-block: var(--s-3); border-bottom: 1px solid var(--c-line); }
+.list-plain li:last-child { border-bottom: 0; }
+.list-plain b { font-weight: 600; flex: 0 0 auto; min-width: 8ch; }
+
+.files { display: grid; gap: var(--s-3); }
+.file {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  border: 1px dashed var(--c-line-2);
+  border-radius: var(--r-md);
+  padding: var(--s-4);
+}
+.file__name { font-weight: 500; }
+.file__meta { font-family: var(--f-mono); font-size: var(--t-micro); color: var(--c-ink-dim); }
+.file__stub { margin-left: auto; font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-alert); text-align: right; }
+
+/* --------------------------------------------------- Таблица программ ---- */
+.table-wrap { overflow-x: auto; }
+.table { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+.table th, .table td { text-align: left; padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--c-line); vertical-align: top; }
+.table th { font-family: var(--f-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-dim); font-weight: 400; white-space: nowrap; }
+.table td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ------------------------------------------------------- Появление ------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+.reveal-child > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity var(--d-slow) var(--e-out), transform var(--d-slow) var(--e-out);
+}
+.reveal-child.is-in > * { opacity: 1; transform: none; }
+
+/* --------------------------------------------------------- Схема прохода -- */
+.map {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-md);
+  background: var(--c-hadal);
+}
+
+/* ------------------------------------------------------------ Страница 404 --
+   Дно: чернота и одна точка света. Тот же приём, что в финале погружения. */
+.notfound {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  align-content: center;
+  background: radial-gradient(60% 50% at 50% 45%, #06131F 0%, #000000 70%);
+  text-align: left;
+}
+.notfound__dot {
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c-glow);
+  box-shadow: var(--glow-hard);
+  margin-bottom: var(--s-6);
+  animation: dotPulse 4.5s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%, 100% { opacity: 0.35; }
+  50%      { opacity: 1; }
+}
+
+/* ------------------------------------------------------------ Фото залов --
+   Снимки уже тонированы в палитру глубины скриптом tools/prepare-photos.ps1,
+   поэтому здесь только рамка и пропорция. Фон подложки — цвет абиссали:
+   пока фото грузится, карточка не мигает белым. */
+.hall__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--c-abyssal);
+  border-bottom: 1px solid var(--c-line);
+  transition: opacity var(--d-mid) var(--e-out), transform var(--d-slow) var(--e-out);
+}
+.hall:hover .hall__photo,
+.hall:focus-within .hall__photo { opacity: 0.92; }
+
+.hall__credit {
+  margin-top: var(--s-3);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.02em;
+  color: var(--c-ink-dim);
+}
+.hall__credit a,
+.credits__row a { color: inherit; text-decoration-color: var(--c-line-2); }
+.hall__credit a:hover,
+.credits__row a:hover { color: var(--c-glow); }
+
+/* --------------------------------------------------------- Авторы фото -- */
+.credits { border-top: 1px solid var(--c-line); }
+.credits__list { display: grid; gap: var(--s-2); }
+@media (min-width: 900px) { .credits__list { grid-template-columns: 1fr 1fr; column-gap: var(--s-7); } }
+.credits__row {
+  margin: 0;
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  color: var(--c-ink-dim);
+  max-width: none;
+}
+.credits__hall { display: block; color: var(--c-ink); letter-spacing: 0.06em; }

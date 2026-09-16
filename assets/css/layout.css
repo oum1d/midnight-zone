@@ -1,0 +1,285 @@
+/* ============================================================================
+   ЗОНА ПОЛУНОЧИ — каркас: шапка, навигация, секции, подвал
+   ============================================================================ */
+
+.wrap {
+  width: 100%;
+  max-width: var(--w-page);
+  margin-inline: auto;
+  padding-inline: var(--s-4);
+}
+@media (min-width: 700px) { .wrap { padding-inline: var(--s-6); } }
+
+.section { padding-block: var(--s-8); }
+.section--tight { padding-block: var(--s-7); }
+.section--wide { padding-block: var(--s-9); }
+@media (min-width: 900px) { .section { padding-block: var(--s-9); } }
+
+.section__head { margin-bottom: var(--s-6); }
+.section__head .label { display: block; margin-bottom: var(--s-3); }
+
+/* ============================================================================
+   Шапка. Кнопка «Купить билет» видна на любом экране — по требованию
+   доступности покупки без прохождения погружения.
+   ============================================================================ */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 80;
+  height: var(--h-header);
+  display: flex;
+  align-items: center;
+  background: color-mix(in srgb, var(--c-hadal) 72%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--c-line);
+  transition: background var(--d-mid) var(--e-out), border-color var(--d-mid) var(--e-out);
+}
+/* Резервный вариант для браузеров без color-mix */
+@supports not (background: color-mix(in srgb, red 50%, blue)) {
+  .header { background: rgba(0, 0, 0, 0.78); }
+}
+
+.header__inner {
+  width: 100%;
+  max-width: var(--w-page);
+  margin-inline: auto;
+  padding-inline: var(--s-4);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+@media (min-width: 700px) { .header__inner { padding-inline: var(--s-6); } }
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.brand:hover { color: var(--c-ink); }
+.brand__mark { width: 28px; height: 28px; flex-shrink: 0; }
+.brand__name {
+  font-family: var(--f-display);
+  font-size: 1.12rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav { margin-left: auto; }
+.nav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav__list li { margin: 0; }
+.nav__link {
+  font-size: var(--t-small);
+  text-decoration: none;
+  color: var(--c-ink-dim);
+  white-space: nowrap;
+  padding-block: var(--s-2);
+}
+.nav__link:hover { color: var(--c-ink); }
+.nav__link[aria-current='page'] {
+  color: var(--c-ink);
+  box-shadow: inset 0 -1px 0 var(--c-glow);
+}
+
+.header__side { display: flex; align-items: center; gap: var(--s-3); margin-left: var(--s-2); }
+
+/* --- Переключатель языка: три коротких кнопки, без выпадающего списка ---- */
+.lang { display: flex; gap: 2px; }
+.lang__btn {
+  appearance: none;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--c-ink-dim);
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  padding: 4px 6px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: color var(--d-fast) var(--e-out), border-color var(--d-fast) var(--e-out);
+}
+.lang__btn:hover { color: var(--c-ink); }
+.lang__btn[aria-pressed='true'] { color: var(--c-glow); border-color: var(--c-line-2); }
+
+/* --- Бургер: только на узких экранах ------------------------------------ */
+.burger {
+  display: none;
+  appearance: none;
+  background: none;
+  border: 1px solid var(--c-line-2);
+  border-radius: var(--r-sm);
+  width: 38px; height: 34px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+.burger span {
+  position: absolute;
+  left: 9px; right: 9px; height: 1px;
+  background: var(--c-ink);
+  transition: transform var(--d-fast) var(--e-out), opacity var(--d-fast) var(--e-out);
+}
+.burger span:nth-child(1) { top: 12px; }
+.burger span:nth-child(2) { top: 16px; }
+.burger span:nth-child(3) { top: 20px; }
+.burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(4px) rotate(45deg); }
+.burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-4px) rotate(-45deg); }
+
+@media (max-width: 899px) {
+  .burger { display: block; order: 3; }
+  .header__side { order: 2; margin-left: auto; }
+  .nav {
+    order: 4;
+    position: fixed;
+    inset: var(--h-header) 0 auto 0;
+    margin: 0;
+    background: var(--c-hadal);
+    border-bottom: 1px solid var(--c-line);
+    max-height: calc(100dvh - var(--h-header));
+    overflow-y: auto;
+    transform: translateY(-8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--d-fast) var(--e-out), transform var(--d-fast) var(--e-out), visibility var(--d-fast);
+  }
+  .nav.is-open { opacity: 1; transform: none; visibility: visible; }
+  .nav__list {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--s-2) var(--s-4) var(--s-5);
+  }
+  .nav__link {
+    display: block;
+    padding: var(--s-3) 0;
+    font-size: 1.05rem;
+    border-bottom: 1px solid var(--c-line);
+  }
+  .nav__link[aria-current='page'] { box-shadow: none; color: var(--c-glow); }
+}
+
+@media (max-width: 599px) {
+  /* На телефоне логотип обратно ужимается: рядом ещё кнопка билета и бургер */
+  .brand { gap: var(--s-2); }
+  .brand__mark { width: 24px; height: 24px; }
+  .brand__name { font-size: 0.86rem; letter-spacing: 0.1em; }
+  .header__side .btn { padding-inline: var(--s-3); }
+}
+
+/* ============================================================================
+   Оболочка внутренних страниц
+   ============================================================================ */
+.page { padding-top: var(--h-header); }
+
+.page__hero {
+  padding-block: var(--s-8) var(--s-6);
+  border-bottom: 1px solid var(--c-line);
+}
+@media (min-width: 900px) { .page__hero { padding-block: var(--s-9) var(--s-7); } }
+.page__hero .label { display: block; margin-bottom: var(--s-4); }
+.page__hero h1 { margin-bottom: var(--s-4); }
+
+/* Фон внутренних страниц: глубина, из которой мы всплыли */
+.page--deep { background: linear-gradient(180deg, var(--c-midnight), var(--c-abyssal) 60%, var(--c-hadal)); }
+.page--day { background: var(--c-day-bg); }
+
+/* --- Сетки --------------------------------------------------------------- */
+.grid { display: grid; gap: var(--s-4); }
+@media (min-width: 620px) { .grid--2 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 620px) { .grid--3 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 620px) { .grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px) { .grid--4 { grid-template-columns: repeat(4, 1fr); } }
+
+.split { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-8); align-items: start; }
+  .split--sticky > :last-child { position: sticky; top: calc(var(--h-header) + var(--s-5)); }
+}
+
+/* ============================================================================
+   Подвал — всегда дневной. После погружения свет режет глаза: так задумано.
+   ============================================================================ */
+.footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid var(--c-day-line);
+  padding-block: var(--s-8) var(--s-6);
+}
+.footer__grid {
+  display: grid;
+  gap: var(--s-6);
+  margin-bottom: var(--s-7);
+}
+@media (min-width: 700px) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr 1fr; } }
+
+.footer h2 {
+  font-size: var(--t-micro);
+  font-family: var(--f-mono);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-day-dim);
+  margin-bottom: var(--s-3);
+}
+.footer ul { list-style: none; padding: 0; margin: 0; }
+.footer li { margin-bottom: var(--s-2); }
+.footer a { text-decoration: none; }
+.footer a:hover { color: var(--c-day-link); text-decoration: underline; }
+
+.footer__brand {
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--s-2);
+  color: var(--c-day-ink);
+}
+
+.footer__bottom {
+  border-top: 1px solid var(--c-day-line);
+  padding-top: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3) var(--s-5);
+  justify-content: space-between;
+  font-size: var(--t-small);
+  color: var(--c-day-dim);
+}
+.footer__demo {
+  font-family: var(--f-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.04em;
+  max-width: 60ch;
+}
+
+/* Короткая подпись кнопки на узком экране: «Купить билет» не помещается
+   рядом с логотипом и бургером, но сама кнопка обязана остаться в шапке. */
+.btn__short { display: none; }
+@media (max-width: 599px) {
+  .btn__long { display: none; }
+  .btn__short { display: inline; }
+}
+
+/* На узком экране переключатель языка переезжает в меню — иначе шапка
+   не помещается в 375 пикселей. Элемент перемещается скриптом, а не
+   дублируется: две одинаковые группы кнопок сбили бы скринридер. */
+.lang--in-menu {
+  padding: var(--s-2) var(--s-4) var(--s-5);
+  gap: var(--s-2);
+}
+.lang--in-menu .lang__btn {
+  min-width: 44px;
+  min-height: 40px;
+  border: 1px solid var(--c-line);
+  font-size: var(--t-small);
+}
