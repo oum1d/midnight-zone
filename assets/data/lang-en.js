@@ -214,8 +214,8 @@ window.MZ_LANG.en = {
       { name: 'Car', text: 'Paid parking at the museum, 40 spaces. Full by midday at weekends' },
       { name: 'On foot', text: 'Ten minutes along the water from Kościuszko Square' }
     ],
-    mapTitle: 'Approach map',
-    mapNote: 'This map is drawn, not embedded: third party maps bring trackers with them and do not work offline.',
+    mapTitle: 'Map',
+    mapNote: 'The map is built on the page instead of being pulled in as a third party frame: no external trackers, only OpenStreetMap tiles leave the page. If it fails to load, the address and a link stay.',
     faqTitle: 'Common questions',
     faq: [
       { q: 'Can I come with a pushchair?', a: 'Yes. Every hall is on one level and there is a lift and a ramp at the entrance. Pushchairs cannot go into hall 7, but there is a place to leave one right next to it.' },

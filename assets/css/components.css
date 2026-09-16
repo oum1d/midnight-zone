@@ -744,3 +744,55 @@
   max-width: none;
 }
 .credits__hall { display: block; color: var(--c-ink); letter-spacing: 0.06em; }
+
+/* ============================================================================
+   КАРТА ПРОЕЗДА
+   ----------------------------------------------------------------------------
+   Плитки OpenStreetMap приходят светлыми, а страница тёмная, поэтому кадр
+   выворачиваем: invert делает его тёмным, hue-rotate возвращает воде синий.
+   Фильтр стоит только на слое плиток — метка и подписи Leaflet лежат в
+   других слоях и остаются в своих цветах.
+   ============================================================================ */
+.map-embed { padding: 0; overflow: hidden; }
+
+.map-embed__canvas {
+  width: 100%;
+  min-height: 320px;
+  height: 320px;
+  border-radius: var(--r-lg);
+  background: var(--c-hadal);
+}
+
+.map-embed .leaflet-tile-pane {
+  filter: invert(0.92) hue-rotate(180deg) grayscale(0.45) contrast(0.9) brightness(1.04);
+}
+
+.map-embed .leaflet-control-attribution {
+  background: rgba(4, 10, 18, 0.85);
+  color: var(--c-ink-dim);
+  font-family: var(--f-mono, monospace);
+  font-size: 11px;
+  padding: 2px 7px;
+}
+.map-embed .leaflet-control-attribution a { color: var(--c-ink-dim); }
+.map-embed .leaflet-control-attribution a:hover { color: var(--c-glow); }
+
+.map-embed .leaflet-bar a {
+  background: var(--c-midnight);
+  color: var(--c-ink);
+  border-bottom-color: var(--c-line);
+}
+.map-embed .leaflet-bar a:hover { background: var(--c-twilight); }
+
+/* Пока карта не построилась — адрес и ссылка вместо пустой рамки */
+.map-embed__fallback {
+  display: grid;
+  place-content: center;
+  gap: 6px;
+  height: 320px;
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  color: var(--c-ink-dim);
+  font-size: 14px;
+}

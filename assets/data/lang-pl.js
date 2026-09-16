@@ -215,8 +215,8 @@ window.MZ_LANG.pl = {
       { name: 'Samochód', text: 'Płatny parking przy muzeum, 40 miejsc. W weekendy zapełnia się do południa' },
       { name: 'Pieszo', text: 'Od skweru Kościuszki — 10 minut wzdłuż wody' }
     ],
-    mapTitle: 'Schemat dojścia',
-    mapNote: 'Schemat jest narysowany, a nie osadzony z mapy: zewnętrzne mapy ciągną za sobą trackery i nie działają bez internetu.',
+    mapTitle: 'Mapa',
+    mapNote: 'Mapa jest złożona na stronie, a nie wstawiona cudzą ramką: żadnych trackerów, na zewnątrz idą tylko kafelki OpenStreetMap. Jeśli mapa się nie wczyta, zostają adres i link.',
     faqTitle: 'Częste pytania',
     faq: [
       { q: 'Czy można z wózkiem?', a: 'Tak, wszystkie sale są na jednym poziomie, przy wejściu jest winda i podjazd. Do sali 7 z wózkiem się nie wchodzi — obok jest miejsce, gdzie można go zostawić.' },

@@ -22,6 +22,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Oswald:wght@300;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/base.css">
 <link rel="stylesheet" href="assets/css/layout.css">
@@ -108,47 +109,18 @@
 
         <div>
           <h2 class="mb-4" data-i18n="visit.mapTitle"></h2>
-          <!-- Схема нарисована, а не подключена картой: внешняя карта тянет
-               трекеры, весит мегабайты и не открывается без интернета -->
-          <div class="panel">
-            <svg viewBox="0 0 420 300" class="map" role="img" aria-labelledby="map-title">
-              <title id="map-title" data-i18n="visit.mapTitle"></title>
-
-              <!-- вода -->
-              <path d="M0 214 C 70 200, 120 236, 200 224 S 340 196, 420 210 L420 300 L0 300Z"
-                    fill="#0A2733" stroke="none"/>
-              <path d="M0 214 C 70 200, 120 236, 200 224 S 340 196, 420 210"
-                    fill="none" stroke="#5FF2E4" stroke-opacity="0.5" stroke-width="1.2"/>
-
-              <!-- улицы -->
-              <path d="M40 0 V300 M0 120 H420 M250 0 V300" stroke="#EAF4F6" stroke-opacity="0.16" stroke-width="10" fill="none"/>
-
-              <!-- здание музея -->
-              <rect x="270" y="146" width="96" height="52" fill="#123A4D" stroke="#5FF2E4" stroke-width="1.4"/>
-              <circle cx="318" cy="172" r="9" fill="none" stroke="#5FF2E4" stroke-width="1.2"/>
-              <path d="M309 172h18M318 163c3 3 3 15 0 18M318 163c-3 3-3 15 0 18"
-                    stroke="#5FF2E4" stroke-width="1" fill="none"/>
-
-              <!-- вход -->
-              <path d="M318 198 v22" stroke="#FF6B35" stroke-width="2"/>
-              <circle cx="318" cy="224" r="4" fill="#FF6B35"/>
-
-              <!-- станция -->
-              <rect x="18" y="98" width="44" height="44" fill="#08192B" stroke="#EAF4F6" stroke-opacity="0.5" stroke-width="1.2"/>
-              <text x="40" y="126" text-anchor="middle" fill="#EAF4F6" font-family="monospace" font-size="13">SKM</text>
-
-              <!-- автобус -->
-              <rect x="228" y="100" width="44" height="40" fill="#08192B" stroke="#EAF4F6" stroke-opacity="0.5" stroke-width="1.2"/>
-              <text x="250" y="125" text-anchor="middle" fill="#EAF4F6" font-family="monospace" font-size="12">BUS</text>
-
-              <!-- парковка -->
-              <rect x="360" y="100" width="40" height="40" fill="#08192B" stroke="#EAF4F6" stroke-opacity="0.5" stroke-width="1.2"/>
-              <text x="380" y="126" text-anchor="middle" fill="#EAF4F6" font-family="monospace" font-size="15">P</text>
-
-              <!-- пеший маршрут от станции -->
-              <path d="M62 120 H228" stroke="#5FF2E4" stroke-width="1.6" stroke-dasharray="5 6" fill="none"/>
-              <path d="M272 120 H318 V146" stroke="#5FF2E4" stroke-width="1.6" stroke-dasharray="5 6" fill="none"/>
-            </svg>
+          <!-- Карта собирается на Leaflet из assets/vendor: никакого чужого
+               кадра с рекламой, наружу уходят только плитки OpenStreetMap -->
+          <div class="panel map-embed">
+            <div class="map-embed__canvas" data-map data-lat="54.5240277" data-lon="18.5429987" data-zoom="16"
+                 role="application" aria-label="Карта: ул. Портовая 12, Гдыня"
+                 data-i18n-attr="aria-label:visit.mapTitle">
+              <p class="map-embed__fallback">
+                <span data-i18n="visit.address"></span> ·
+                <a href="https://www.openstreetmap.org/?mlat=54.52403&amp;mlon=18.54300#map=16/54.52403/18.54300"
+                   target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+              </p>
+            </div>
           </div>
           <p class="form__note mt-3" data-i18n="visit.mapNote"></p>
         </div>
@@ -274,7 +246,9 @@
 <script src="assets/data/exhibition.js"></script>
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/forms.js"></script>
+<script src="assets/vendor/leaflet/leaflet.js"></script>
 <script src="assets/js/visit.js"></script>
+<script src="assets/js/map.js"></script>
 <script src="assets/js/ui.js"></script>
 </body>
 </html>
