@@ -252,9 +252,11 @@ powershell -ExecutionPolicy Bypass -File tools\prepare-creatures.ps1 -Source "п
 - Honeypot-поле в каждой форме: невидимое человеку, заполняется ботами.
 - Ограничение частоты отправки.
 - Обязательное согласие на обработку данных у каждой формы.
-- Никаких сторонних скриптов, счётчиков, аналитики, шрифтовых трекеров
-  кроме Google Fonts, встроенных карт и cookie. Cookie сайт не ставит
-  вообще; в локальном хранилище лежит только выбранный язык.
+- Никаких сторонних скриптов, счётчиков и аналитики. Шрифты лежат в
+  проекте (`assets/fonts/`, SIL OFL 1.1). Наружу уходит один запрос —
+  плитки карты OpenStreetMap на странице «Как добраться», и только когда
+  человек долистал до карты. Cookie сайт не ставит вообще; в локальном
+  хранилище лежит только выбранный язык.
 - Внешних ссылок нет; если появятся — `rel="noopener noreferrer"`.
 - Никаких ключей, токенов и приватных адресов в коде.
 
@@ -268,7 +270,7 @@ powershell -ExecutionPolicy Bypass -File tools\prepare-creatures.ps1 -Source "п
 Nginx:
 
 ```nginx
-add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'" always;
 add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "strict-origin-when-cross-origin" always;
@@ -279,7 +281,7 @@ Netlify — файл `_headers` в корне:
 
 ```
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://tile.openstreetmap.org; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
@@ -352,5 +354,5 @@ Netlify — файл `_headers` в корне:
 4. **Safari и Firefox.** Проверено в Chromium. Рискованные места:
    `backdrop-filter`, `color-mix` (для него есть запасной вариант) и
    `position: sticky` с отрицательным margin у сцены погружения.
-5. **Работа шрифтов офлайн.** Запасной стек прописан, но как именно
-   выглядит вёрстка без Google Fonts, глазами не проверялось.
+5. **Шрифты офлайн.** С 17.09.2026 шрифты лежат в проекте и не зависят
+   от сети; до этого грузились с Google Fonts.

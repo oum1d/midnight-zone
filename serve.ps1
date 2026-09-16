@@ -76,7 +76,7 @@ while ($listener.IsListening) {
         # Заголовки безопасности. Ровно те же нужно выставить на реальном
         # хостинге — в README есть версии для Nginx и Netlify.
         #
-        # CSP разрешает шрифты Google и запрещает всё остальное внешнее.
+        # CSP разрешает снаружи только плитки карты OpenStreetMap; шрифты лежат в проекте.
         # 'unsafe-inline' для стилей нужен из-за <svg style> и inline-правил,
         # которые скрипт ставит на элементы; для скриптов он НЕ разрешён.
         # Метатегом CSP не ставится намеренно: на протоколе file:// источник
@@ -85,9 +85,9 @@ while ($listener.IsListening) {
         # ---------------------------------------------------------------------
         $csp = "default-src 'self'; " +
                "script-src 'self'; " +
-               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
-               "font-src 'self' https://fonts.gstatic.com; " +
-               "img-src 'self' data:; " +
+               "style-src 'self' 'unsafe-inline'; " +
+               "font-src 'self'; " +
+               "img-src 'self' data: https://tile.openstreetmap.org; " +
                "connect-src 'self'; " +
                "object-src 'none'; " +
                "base-uri 'none'; " +
