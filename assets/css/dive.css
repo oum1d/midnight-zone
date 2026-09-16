@@ -89,7 +89,9 @@
 }
 
 /* ------------------------------------------------------------- Сцены ----- */
-.dive__scenes { position: relative; z-index: 2; }
+/* clip, а не hidden: подложка под текстом шире экрана, и её нужно обрезать,
+   но блок не должен становиться прокручиваемым */
+.dive__scenes { position: relative; z-index: 2; overflow-x: clip; }
 
 .scene {
   min-height: 100vh;
@@ -245,6 +247,9 @@
   min-height: 220px;
   display: grid;
   grid-template-columns: 22px 1fr;
+  /* Строка ровно в высоту шкалы. Иначе трос растягивал её до своих
+     400 px из viewBox, и нижняя засечка наезжала на показания. */
+  grid-template-rows: minmax(0, 1fr);
   gap: var(--s-2);
 }
 
@@ -301,7 +306,7 @@
   color: var(--c-glow);
   line-height: 1.1;
 }
-.scale__depth { font-size: clamp(0.78rem, 1.6vw, 1rem); letter-spacing: 0.02em; }
+.scale__depth { font-size: clamp(0.78rem, 1.6vw, 1rem); letter-spacing: 0.02em; white-space: nowrap; }
 .scale__zone {
   display: block;
   font-size: 0.56rem;
@@ -394,6 +399,9 @@
   z-index: 250;
   pointer-events: none;
   visibility: hidden;
+  /* Тело волны шире экрана, чтобы не было видно скруглённых краёв.
+     Без обрезки оно растягивало страницу вбок на телефоне. */
+  overflow: hidden;
 }
 .wave.is-active { visibility: visible; }
 .wave__body {

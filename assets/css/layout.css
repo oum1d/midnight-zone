@@ -201,7 +201,7 @@
 @media (min-width: 620px) { .grid--4 { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 960px) { .grid--4 { grid-template-columns: repeat(4, 1fr); } }
 
-.split { display: grid; gap: var(--s-6); }
+.split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }
 @media (min-width: 900px) {
   .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-8); align-items: start; }
   .split--sticky > :last-child { position: sticky; top: calc(var(--h-header) + var(--s-5)); }

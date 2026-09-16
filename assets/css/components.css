@@ -419,7 +419,7 @@
 
 .cal__weekdays, .cal__grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 4px;
 }
 .cal__weekdays {
@@ -450,6 +450,8 @@
   gap: 3px;
   transition: border-color var(--d-fast) var(--e-out), background var(--d-fast) var(--e-out);
 }
+/* Семь клеток по 42 px не помещаются в телефон шириной 360 px */
+@media (max-width: 389px) { .cal__day { min-height: 36px; } }
 .cal__day:hover:not([disabled]) { border-color: var(--c-ink); }
 .cal__day[disabled] { opacity: 0.3; cursor: not-allowed; }
 .cal__day.is-empty { border: 0; cursor: default; }
