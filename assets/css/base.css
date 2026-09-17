@@ -120,7 +120,8 @@ hr {
 .skip-link:focus { transform: translateY(0); color: var(--c-hadal); }
 
 .stack > * + * { margin-top: var(--s-4); }
-.text-alert { color: var(--c-alert); }
+.text-alert { color: var(--c-alert-text); }
+.is-day { --c-alert-text: #B83D0B; }
 .text-glow { color: var(--c-glow); }
 .nowrap { white-space: nowrap; }
 

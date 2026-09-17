@@ -72,7 +72,7 @@
   border-radius: 999px;
   padding: 3px 10px;
 }
-.tag--alert { color: var(--c-alert); border-color: color-mix(in srgb, var(--c-alert) 45%, transparent); }
+.tag--alert { color: var(--c-alert-text); border-color: color-mix(in srgb, var(--c-alert) 45%, transparent); }
 .tag--glow { color: var(--c-glow); border-color: color-mix(in srgb, var(--c-glow) 40%, transparent); }
 
 /* --------------------------------------------------------------- Панель -- */
@@ -223,8 +223,8 @@
   padding: var(--s-5);
 }
 .warn__head { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-3); }
-.warn__icon { width: 26px; height: 26px; flex-shrink: 0; color: var(--c-alert); }
-.warn h2, .warn h3 { color: var(--c-alert); font-size: var(--t-h3); }
+.warn__icon { width: 26px; height: 26px; flex-shrink: 0; color: var(--c-alert-text); }
+.warn h2, .warn h3 { color: var(--c-alert-text); font-size: var(--t-h3); }
 .warn ul { margin-top: var(--s-3); margin-bottom: 0; }
 .warn li { color: var(--c-ink-dim); font-size: var(--t-small); }
 
@@ -561,7 +561,7 @@
 
 .field { display: grid; gap: var(--s-2); }
 .field__label { font-family: var(--f-mono); font-size: var(--t-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-ink-dim); }
-.field__label .req { color: var(--c-alert); }
+.field__label .req { color: var(--c-alert-text); }
 
 .input, .select, .textarea {
   width: 100%;
@@ -582,7 +582,7 @@
 
 .field__error {
   font-size: var(--t-small);
-  color: var(--c-alert);
+  color: var(--c-alert-text);
   min-height: 0;
 }
 .field__error:empty { display: none; }
@@ -620,7 +620,7 @@
   border-left-width: 3px;
   border-radius: var(--r-md);
   padding: var(--s-3) var(--s-4);
-  color: var(--c-alert);
+  color: var(--c-alert-text);
   font-size: var(--t-small);
 }
 
@@ -649,7 +649,7 @@
 }
 .file__name { font-weight: 500; }
 .file__meta { font-family: var(--f-mono); font-size: var(--t-micro); color: var(--c-ink-dim); }
-.file__stub { margin-left: auto; font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-alert); text-align: right; }
+.file__stub { margin-left: auto; font-family: var(--f-mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-alert-text); text-align: right; }
 
 /* --------------------------------------------------- Таблица программ ---- */
 .table-wrap { overflow-x: auto; }
